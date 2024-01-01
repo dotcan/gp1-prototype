@@ -13,6 +13,14 @@ def mobile_markdown():
             min-width: calc(20% - 1rem) !important;
         }
     }
+    viewerBadge_link__qRIco {
+        display: none;
+        visibility: hidden;
+    }
+    [data-testid="stToolbarActions"] {
+        display: none;
+        visibility: hidden;
+    }
     </style>
     """, unsafe_allow_html=True)
 
