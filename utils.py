@@ -25,3 +25,17 @@ def gen_cols(odict, n_cols):
     cols = [column for row in cols_per_row for column in row]
 
     yield cols
+
+
+def state_append_char(letter: str):
+    st.session_state.text += letter
+
+
+def state_append_braille(letter: str, braille: str):
+    state_append_char(letter)
+    st.session_state.braille += braille
+
+
+def state_append_num(num: str | int, braille: str, ttb):
+    state_append_char(str(num))
+    st.session_state.braille += (ttb['special_conversion'][0]['braille'] + braille)
