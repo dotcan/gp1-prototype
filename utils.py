@@ -13,9 +13,9 @@ def mobile_markdown():
             min-width: calc(20% - 1rem) !important;
         }
     }
-    viewerBadge_link__qRIco {
-        display: none;
-        visibility: hidden;
+    .viewerBadge_link__qRIco {
+        display: none !important;
+        visibility: hidden !important;
     }
     [data-testid="stToolbarActions"] {
         display: none;
