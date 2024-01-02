@@ -47,3 +47,21 @@ def state_append_braille(letter: str, braille: str):
 def state_append_num(num: str | int, braille: str, ttb):
     state_append_char(str(num))
     st.session_state.braille += (ttb['special_conversion'][0]['braille'] + braille)
+
+
+def state_pop():
+    if not st.session_state.text or not st.session_state.braille:
+        return
+
+    s1: str = st.session_state.text
+    s2: str = st.session_state.braille
+    if s1[-1].isdecimal():
+        st.session_state.braille = s2[:-2]
+    else:
+        st.session_state.braille = s2[:-1]
+    st.session_state.text = s1[:-1]
+
+
+def state_fresh():
+    st.session_state.text = ''
+    st.session_state.braille = ''

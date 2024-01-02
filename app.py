@@ -3,9 +3,9 @@ import argparse
 import streamlit as st
 from streamlit_javascript import st_javascript as st_js
 
+import tts
 from lang.en import ttb
-from tts import TextToSpeech
-from utils import gen_cols, mobile_markdown, state_append_braille, state_append_num
+from utils import gen_cols, mobile_markdown, state_append_braille, state_append_num, state_pop
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dev', action='store_true')
@@ -26,13 +26,12 @@ with st.sidebar:
         st.markdown("This is a proof of concept demo that demonstrates how braille to text conversion works, "
                     "and converting text to speech")
     with st.expander("Configuration", expanded=True):
-        st.checkbox("Display Letters", value=True)
+        disp_letters = st.checkbox("Display Letters", value=True)
         st.session_state.speech = st.selectbox("Voice", options=['male', 'female'])
     if args.dev:
         with st.expander('dev'):
             st.json(st.session_state)
 
-tts = TextToSpeech(0 if st.session_state.speech == 'male' else 1)
 mobile_markdown()
 if st_js('screen.width') >= 600:
     st.session_state.cols = 7
@@ -53,20 +52,20 @@ with st.expander(label="Letters", expanded=True):
     with gen_cols(ttb['letter_conversion'], st.session_state.cols) as column:
         for i, di in enumerate(ttb['letter_conversion']):
             column[i].button(
-                label=di['braille'],
+                label=f"{di['braille']}{di['display'] if disp_letters else ''}",
                 help=di['display'],
                 on_click=state_append_braille,
-                args=[di['letter'], di['braille']]
+                args=[di['letter'], di['braille']],
             )
 
 with st.expander(label="Numbers", expanded=True):
     with gen_cols(ttb['number_conversion'], st.session_state.cols) as column:
         for i, di in enumerate(ttb['number_conversion']):
             column[i].button(
-                label=di['braille'],
+                label=f"{di['braille']}{di['display'] if disp_letters else ''}",
                 help=di['display'],
                 on_click=state_append_num,
-                args=[di['num'], di['braille'], ttb]
+                args=[di['num'], di['braille'], ttb],
             )
 
 with st.expander(label="Miscellaneous", expanded=True):
@@ -74,9 +73,14 @@ with st.expander(label="Miscellaneous", expanded=True):
         for i, di in enumerate(ttb['special_conversion']):
             if 'hidden' in di:
                 continue
-
-            column[i - 1].button(
-                label=di['display'],
-                on_click=state_append_braille,
-                args=[di['letter'], di['braille']]
-            )
+            if 'callback' in di:
+                column[i - 1].button(
+                    label=di['display'],
+                    on_click=di['callback'],
+                )
+            else:
+                column[i - 1].button(
+                    label=di['display'],
+                    on_click=state_append_braille,
+                    args=[di['letter'], di['braille']],
+                )

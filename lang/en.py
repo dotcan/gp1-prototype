@@ -1,3 +1,5 @@
+from utils import state_pop, state_fresh
+
 ttb = {
     'langauge': 'English',
     'letter_conversion': [
@@ -200,6 +202,14 @@ ttb = {
             'letter': '\n',
             'display': 'ENTER',
             'braille': '\n',
+        },
+        {
+            'display': 'BACK',
+            'callback': state_pop
+        },
+        {
+            'display': 'DEL',
+            'callback': state_fresh
         },
     ]
 }
