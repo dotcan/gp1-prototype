@@ -7,6 +7,8 @@ import tts
 from lang.en import ttb
 from utils import gen_cols, mobile_markdown, state_append_braille, state_append_num, state_pop
 
+st.set_page_config(page_title="DotBraille GP1 Demo")
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--dev', action='store_true')
 args = parser.parse_args()
@@ -21,6 +23,7 @@ if 'cols' not in st.session_state:
     st.session_state.cols = 1
 
 with st.sidebar:
+
     st.header("DotBraille GP1 Demo")
     with st.expander("About this app"):
         st.markdown("This is a proof of concept demo that demonstrates how braille to text conversion works, "
