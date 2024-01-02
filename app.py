@@ -52,8 +52,10 @@ st.write("##### Converted Text")
 st.code(st.session_state.text)
 
 if not auto_convert:
+    st.write("###### Speech")
     col1, col2 = st.columns(2)
-    if col1.button('convert to speech', disabled=(st.session_state.text == ''), type='primary'):
+    if col1.button('convert to speech', disabled=(not st.session_state.text),
+                   type='primary', use_container_width=True):
         col2.audio(tts.convert(st.session_state.text), format='audio/mpeg')
 else:
     if st.session_state.text:
@@ -61,6 +63,7 @@ else:
             st.write("###### Converted Speech")
             st.audio(tts.convert(st.session_state.text), format='audio/mpeg')
 
+st.divider()
 st.write("##### Input")
 with st.expander(label="Letters", expanded=True):
     with gen_cols(ttb['letter_conversion'], st.session_state.cols) as column:
