@@ -13,10 +13,12 @@ def mobile_markdown():
             min-width: calc(20% - 1rem) !important;
         }
     }
-    .viewerBadge_link__qRIco {
+    
+    .viewerBadge_link__qRIco, .viewerBadge_container__r5tak {
         display: none !important;
         visibility: hidden !important;
     }
+    
     [data-testid="stToolbarActions"] {
         display: none;
         visibility: hidden;
