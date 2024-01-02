@@ -5,7 +5,7 @@ from streamlit_javascript import st_javascript as st_js
 
 import tts
 from lang.en import ttb
-from utils import gen_cols, mobile_markdown, state_append_braille, state_append_num
+from utils import gen_cols, apply_styles, state_append_braille, state_append_num
 
 st.set_page_config(page_title="DotBraille GP1 Demo")
 
@@ -39,7 +39,7 @@ with st.sidebar:
         with st.expander('dev'):
             st.json(st.session_state)
 
-mobile_markdown()
+apply_styles()
 is_desktop = st_js('screen.width') >= 600
 if is_desktop:
     st.session_state.cols = 7
@@ -53,7 +53,7 @@ st.code(st.session_state.text)
 
 if not auto_convert:
     col1, col2 = st.columns(2)
-    if col1.button('convert to speech', disabled=(st.session_state.text == '')):
+    if col1.button('convert to speech', disabled=(st.session_state.text == ''), type='primary'):
         col2.audio(tts.convert(st.session_state.text), format='audio/mpeg')
 else:
     if st.session_state.text:
@@ -91,10 +91,12 @@ with st.expander(label="Miscellaneous", expanded=True):
                 column[i - 1].button(
                     label=di['display'],
                     on_click=di['callback'],
+                    type='primary',
                 )
             else:
                 column[i - 1].button(
                     label=di['display'],
                     on_click=state_append_braille,
                     args=[di['letter'], di['braille']],
+                    type='primary',
                 )

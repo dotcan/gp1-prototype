@@ -3,7 +3,7 @@ from contextlib import contextmanager
 import streamlit as st
 
 
-def mobile_markdown():
+def apply_styles():
     st.markdown("""
     <style>
     @media only screen and (max-width: 600px) {
@@ -12,6 +12,15 @@ def mobile_markdown():
             flex: 1 1 calc(25% - 1rem) !important;
             min-width: calc(20% - 1rem) !important;
         }
+        
+        [data-testid="stToolbarActions"] {
+            display: none;
+            visibility: hidden;
+        }
+        
+        button[kind="secondary"] {
+            letter-spacing: 5px;
+        }
     }
     
     .viewerBadge_link__qRIco, .viewerBadge_container__r5tak {
@@ -19,9 +28,11 @@ def mobile_markdown():
         visibility: hidden !important;
     }
     
-    [data-testid="stToolbarActions"] {
-        display: none;
-        visibility: hidden;
+    button[kind="secondary"] {
+        writing-mode: vertical-lr !important;
+        text-orientation: upright !important;
+        -webkit-writing-mode: vertical-lr !important;
+        -webkit-text-orientation: upright !important;
     }
     </style>
     """, unsafe_allow_html=True)
