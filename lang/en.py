@@ -204,11 +204,11 @@ ttb = {
             'braille': '\n',
         },
         {
-            'display': 'BACK',
+            'display': 'BACKSPACE',
             'callback': state_pop
         },
         {
-            'display': 'DEL',
+            'display': 'CLEAR',
             'callback': state_fresh
         },
     ]

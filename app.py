@@ -40,7 +40,8 @@ with st.sidebar:
             st.json(st.session_state)
 
 mobile_markdown()
-if st_js('screen.width') >= 600:
+is_desktop = st_js('screen.width') >= 600
+if is_desktop:
     st.session_state.cols = 7
 else:
     st.session_state.cols = 4
@@ -82,7 +83,7 @@ with st.expander(label="Numbers", expanded=True):
             )
 
 with st.expander(label="Miscellaneous", expanded=True):
-    with gen_cols(ttb['special_conversion'], st.session_state.cols) as column:
+    with gen_cols(ttb['special_conversion'], 4 if is_desktop else 3) as column:
         for i, di in enumerate(ttb['special_conversion']):
             if 'hidden' in di:
                 continue
